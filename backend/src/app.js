@@ -2,13 +2,26 @@ const express = require("express");
 
 const app = express();
 
-app.get("/", (req,res) => {
-    res.send("hello");
+const { adminAuth, userAuth } = require("./middlewares/auth");
+
+//app.use("/admin",adminAuth);
+//app.use("/user",userAuth);
+
+app.get("/admin/getData", adminAuth, (req,res) => {
+    res.send("All data sent");
+});
+
+app.get("/admin/delete", (req,res) => {
+    res.send("data deleted");
+});
+
+
+
+app.get("/user" , userAuth, (req,res) =>{
+    res.send({Fname: "Muskan" , Lname: "Agarwal"} );
 })
 
-app.get("/home", (req,res) => {
-    res.send("hello home");
-})
+
 
 app.listen(3000, () => {
     console.log("server is running on port 3000");
